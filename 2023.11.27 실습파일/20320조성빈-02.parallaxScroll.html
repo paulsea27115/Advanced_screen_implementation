@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>02.ParallaxScroll</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      header {
+        width: 100%;
+        height: 50px;
+        z-index: 1000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        text-align: center;
+        padding: 10px 0;
+        transition: 1s;
+        color: black;
+        font-weight: 600;
+        background-color: white;
+        box-shadow: rgba(255, 255, 255, 1) 0px 0px 15px;
+      }
+      strong {
+        font-weight: bold;
+      }
+      
+      .step {
+        position: relative;
+        width: 380px;
+        margin:0 auto 80vh auto;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        padding: 20px;
+        border: 2px solid black;
+        box-shadow: rgba(255, 255, 255, 1) 0px 0px 15px;
+        line-height: 30px;
+        z-index: 100;
+        background-color: white;
+      }
+      div.scroll-graphic {
+        width: 100vw;
+        height: 100vh;
+        transition: 1s;
+      }
+      div.graphic-item {
+        opacity: 0;
+        position: fixed;
+        transition: 1.5s;
+        will-change: opacity;
+      }
+      div.scene-img {
+        height: 100vh;
+        width: 100vw;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        z-index: 1;
+      }
+      div.visible {
+        opacity: 1;
+        
+      }
+      </style>
+  </head>
+  <body>
+    <header>
+      <span>유기동물에 관한 슬픈 보고서 </span>
+    </header>
+    <section class="scroll_content">
+      <div class="scroll-graphic">
+        <div class="graphic-item scene-img"></div>
+        <div class="graphic-item scene-img"></div>
+        <div class="graphic-item scene-img"></div>
+        <div class="graphic-item scene-img"></div>
+        <div class="graphic-item scene-img"></div>
+      </div>
+      <div class="scroll-text global-width">
+        <div class="step">
+          <p class="center">
+            당신은 반려동물과 <br/>
+            함께하나요?
+          </p>
+        </div>
+        <div class="step">
+          <p class="center">
+            매일 아침 반려동물과 <br/>
+            산책하는 소소한 행복
+          </p>
+        </div>
+        <div class="step">
+          <p class="center">
+            반려인구 <strong>1,500만</strong><br/>
+            4가구 중 1가구는 반려동물을 키우는 시대
+          </p>
+        </div>
+        <div class="step">
+          <p class="center">그리고</p>
+        </div>
+        <div class="step">
+          <p class="center">
+            하루에 <br/>
+            <strong>372마리</strong>를 버리는 오늘
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="intro"></section>
+    <script>
+      const graphicItems = document.querySelectorAll('.graphic-item')
+      const steps = document.querySelectorAll('.step')
+
+      const targetStep = new IntersectionObserver((entries, observer) => { // IntersectionObserver 객체 생성
+        entries.forEach((entry) => {
+          showBackground(entry)
+        })
+      }); // 관찰자 초기화
+      
+      const firstLoadBackground = ()=>{ // 첫번째 로드에 background 안나오는 점을 위한 함수
+        for(let i = 0 ; i < steps.length; i++) {
+          if(graphicItems[i].classList.contains('visible')) // 만약 한게라도 켜져있을 시
+            return
+        }
+        graphicItems[0].classList.add('visible');
+      }
+      
+      const checkBackgroundIndex = (index) => { // step에 알맞는 background의 dataset-index 구하는 함수
+        for(let i = 0; i < graphicItems.length; i++) {
+          if(graphicItems[i].dataset.index == index) // index가 서로 같으면 return
+            return graphicItems[i]
+        }
+      }
+
+      const showBackground = (entry)=>{ // background 보여주기 위한 함수
+        let index = entry.target.dataset.index; // step의 dataset-index
+        let compare = checkBackgroundIndex(index) // background의 dataset-index
+        
+        if(entry.isIntersecting) // 만약 보인다면
+        compare.classList.add("visible")
+        else
+          compare.classList.remove("visible")
+          firstLoadBackground()
+          // 필요 이유
+          // IntersectionObserver는 교차하는 영역이 달라지는 경우 이를 비동기적으로 감지할 수 있는 수단이다.
+          // 처음 로드되었을때 또한 검사를 한다. 근데 처음 화면은 step이 화면에 없기 때문에 else에 부합하게 된다.
+          // 그래서 모든 step이 화면에 없기에 모두 else에 해당이되고 전부다 visible 클래스가 remove 된다.
+          // 이를 고려하려 만약 visible이 background에 step이 한개도 없을때 처음 화면이라 판단하고
+          // 첫번째 background를 보여준다
+          
+          // 더 생각해보면 코드를 줄일 수 있을것 같다
+      }
+      
+      steps.forEach((el, idx)=>{ // dataset 추가를 위한 for문
+        graphicItems[idx].dataset.index = idx;
+        steps[idx].dataset.index = idx;
+
+        targetStep.observe(el); // 관찰자 등록
+    
+        graphicItems[idx].setAttribute('style',`background-image: url('./img/intro${idx+1}.png');`);
+      })
+    </script>
+  </body>
+  </html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ex01.ScrollTrigger</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+* {
+        margin: 0;
+        padding: 0;
+      }
+
+      li {
+        list-style: none;
+      }
+
+      section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #23282a;
+        color: #fff;
+        border: 2px solid red;
+      }
+
+      .home .title {
+        font-size: 120px;
+        text-transform: uppercase;
+      }
+
+      .home .title span {
+        -webkit-text-stroke: 2px #b1dd40;
+        color: transparent;
+        display: block;
+        text-align: center;
+      }
+
+      .content01 {
+        display: flex;
+      }
+
+      .content01 .circle {
+        display: block;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background-color: #ffbbcc;
+        font-size: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .content02 ul {
+        display: flex;
+        width: 70%;
+        justify-content: space-between;
+        color: #23282a;
+        font-weight: bold;
+      }
+
+      .content02 ul li {
+        width: 22%;
+        background-color: #fed700;
+        height: 300px;
+        border-radius: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .content03 {
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 2000px;
+      }
+
+      .content03 .title {
+        -webkit-text-stroke: 2px #b1dd40;
+        color: transparent;
+        font-size: 100px;
+      }
+
+      .content03 span {
+        position: absolute;
+        display: block;
+        width: 250px;
+        height: 350px;
+        background-color: #fee8b0;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #333;
+        font-size: 30px;
+        font-weight: bold;
+      }
+
+      .content03 span#card01 {
+        transform: translate(-50%, -50%) rotate(-12deg);
+      }
+
+      .content03 span#card02 {
+        background: #ffbbcc;
+        transform: translate(-50%, -50%) rotate(12deg);
+      }
+
+      .content03 span#card03 {
+        background: #ffcccc;
+        transform: translate(-50%, -50%) rotate(-15deg);
+      }
+
+      .content03 span#card04 {
+        background: #df9773;
+        transform: translate(-50%, -50%) rotate(18deg);
+      }
+
+      .content03 span#card05 {
+        background: #d9eccb;
+        transform: translate(-50%, -50%) rotate(-3deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <section class="home">
+        <h2 class="title"><span>GSAP</span>ScrollTrigger</h2>
+      </section>
+      <section class="content01">
+        <div class="circle">box</div>
+      </section>
+      <section class="content02">
+        <ul>
+          <li>Card1</li>
+          <li>Card2</li>
+          <li>Card3</li>
+          <li>Card4</li>
+        </ul>
+      </section>
+
+      <section class="content03">
+        <h2 class="title">section03</h2>
+        <span id="card01">Card1</span>
+        <span id="card02">Card2</span>
+        <span id="card03">Card3</span>
+        <span id="card04">Card4</span>
+        <span id="card05">Card5</span>
+      </section>
+    </div>
+    <script>
+      // GSAP는 특정 요소(ScrollTrigger에서 정한 영역)에 뷰포트가 있을때만 재생됨
+      // 이러면 더 높은 질의 애니메이션을 얻을 수 있음
+      // gsap.to() => 현재 상태에서 정의된값으로 애니메이션을 적용
+      // gsap.from() => 정의된 값에서 애니메이션 시작 -> 혀재상태로 끝남;역방향
+      // gsap.fromTo() => 시작과 종료값을 모두 적용
+      // gsap.timeline() => 시간에 배치하는 트윈용 컨테이너. 
+      // 시간에 따라 보이고 안보이고 싶은때 사용하는것
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.from(".circle",{
+        duration : 1,
+        x : 500,
+        rotation :360,
+        scrollTrigger : {
+          trigger : ".circle",
+          start : "0% 30%", // 시작 지점
+          end : "100% 80%", // 끝 지점
+        },
+      });
+      gsap.timeline({
+        scrollTrigger: {
+          trigger : ".content02 ul",
+          start : "top 90%", // start line
+          end : "20% 100%", // end line
+        },
+      }).to(".content02 li:nth-child(1)",{
+        y: -200,
+        duration: 1,
+        ease: "none",
+      },
+      0.2).to(".content02 li:nth-child(2)",{
+        y: -200,
+        duration: 1,
+        ease: "none",
+      },
+      0.4).to(".content02 li:nth-child(3)",{
+        y: -200,
+        duration: 1,
+        ease: "none",
+      },
+      0.6).to(".content02 li:nth-child(4)",{
+        y: -200,
+        duration: 1,
+        ease: "none",
+      },
+      0.8)
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: ".content03",
+          start: "top 100%",
+          end: "100% 100%",
+          markers: true,
+          scrub: 2,
+        }
+      }).fromTo("section.content03 span:nth-child(2)",
+        {
+          y: "400%",
+        },
+        {
+          y: 0,
+        },1).fromTo("section.content03 span:nth-child(3)",
+        {
+          y: "400%",
+        },
+        {
+          y: 0,
+        },2).fromTo("section.content03 span:nth-child(4)",
+        {
+          y: "400%",
+        },
+        {
+          y: 0,
+        },3).fromTo("section.content03 span:nth-child(5)",
+        {
+          y: "400%",
+        },
+        {
+          y: 0,
+        },4).fromTo("section.content03 span:nth-child(6)",
+        {
+          y: "400%",
+        },
+        {
+          y: 0,
+        },5)
+    </script>
+  </body>
+</html>

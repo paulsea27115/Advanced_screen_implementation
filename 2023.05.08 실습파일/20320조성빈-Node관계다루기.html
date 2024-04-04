@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Node 관계 다루기</title>
+  <style>
+    button {
+      margin: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>각 버튼을 클릭해보세요</h1>
+  <p id="first_title">container</p>
+  <div id="container" style="border: 5px solid black; height: 100px;">
+    <button class="btn"> 1번 </button>
+    <button class="btn"> 2번 </button>
+    <button class="btn"> 3번 </button>
+    <button class="btn"> 4번 </button>
+  </div>
+  <p id="second_title">targetContainer</p>
+  <div id="targetContainer" style="border: 1px solid black; height: 100px;"></div>
+  <script type="text/javascript">
+    const container = document.querySelector("div#container");
+    const targetContainer = document.querySelector("div#targetContainer");
+    const title = Array.from(document.querySelectorAll("p"));
+
+    const btns = Array.from(container.children);
+
+    console.log(btns);
+
+    let currentNode, currentDiv;
+
+    btns.forEach((el, idx) => {
+      el.addEventListener("click", (e) => {
+        currentNode = e.target
+        console.log(currentNode.parentElement)
+        if (currentNode.parentElement.id == "container")
+          targetContainer.appendChild(currentNode);
+        else
+          container.appendChild(currentNode);
+      })
+    })
+
+    title.forEach((el, idx) => {
+      el.addEventListener("click", (e) => {
+        if (e.target.id == "first_title") {
+          currentDiv = Array.from(document.querySelector("div#container").children)
+          for (let item of currentDiv) {
+            targetContainer.appendChild(item);
+          }
+        } else {
+          currentDiv = Array.from(document.querySelector("div#targetContainer").children)
+          for (let item of currentDiv) {
+            container.appendChild(item);
+          }
+        }
+      })
+    })
+
+  </script>
+</body>
+
+</html>

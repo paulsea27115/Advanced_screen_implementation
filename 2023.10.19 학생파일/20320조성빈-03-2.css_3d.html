@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>03-2.css_3d</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html{
+      height: 100%;
+    }
+
+    .stage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 50vh;
+      /* perspective: 400px; */
+    }
+
+    .stage > .box {
+      transition: 0.5s;
+      width: 100px;
+      height: 150px;
+      background: blue;
+      color: #fff;
+      font-size: 2rem;
+      text-align: center;
+      /* transform: rotateY(50deg); */
+      transform: perspective(400px) rotateY(50deg);
+      cursor: pointer;
+      margin: 40px;
+
+    }
+
+    .box.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .stage > .box_container {
+      width: 400px;
+      background: #c7c7c7;
+      transform-style: preserve-3d;
+    }
+
+    .box_container > .new_box {
+      width: 150px;
+      height: 150px;
+      background: #0cb3ee;
+      transition: 1s;
+      cursor: pointer;
+    }
+
+    .box_container > .new_box.active {
+      /* transform: rotate(45deg) translateY(200px); */
+      transform: rotate(45deg) translateZ(200px);
+    }
+
+    /* container */
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 50vw;
+    }
+
+    .container > .door_wrap {
+      position: relative;
+      width: 195px;
+      height: 250px;
+      box-sizing: border-box;
+      /* display: flex; */
+      /* flex-direction: row; */
+      /* justify-content: center; */
+      /* align-items: center; */
+      /* border: 1px solid black !important; */
+      /* overflow: hidden; */
+    }
+
+    .door {
+      position: relative;
+      transition: 1s;
+      width: 100%;
+      height: 100%;
+      background-image: url('img/door.png');
+      background-size: 280px 260px;
+      background-repeat: no-repeat;
+      background-position: center;
+      transform: perspective(800px) rotateY(0);
+      transform-origin: left top;
+      cursor: pointer;
+      z-index: 3;
+    }
+    .door.active {
+      transform: rotateY(-120deg);
+      transform-origin: left;
+    }
+    .door_inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 2px solid #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* width: fit-content; */
+      /* height: auto; */
+      /* z-index: 1; */
+      overflow: hidden;
+    }
+    .donguri {
+      /* z-index: 2; */
+      /* width: auto;
+      height: auto; */
+      transition: 1s;
+      width: 180px;
+      overflow: hidden;
+      transition: all 0.5s;
+      opacity: 0;
+      transform: translateX(180px);
+    }
+    .donguri.on{
+      transition: 1s;
+      opacity: 1;
+      transform: translateX(0px);
+    }
+
+    /* card */
+    .card_wrap {
+      position: relative;
+      width: 180px;
+      height: 250px;
+      margin-left: 200px;
+      box-sizing: border-box;
+      transform-origin: preserve-3d;
+      transition: 1s ease;
+      perspective: 600px;
+    }
+
+    .card  {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      backface-visibility: hidden;
+    }
+  
+    .card_front {
+      /* position: absolute; */
+      background: linear-gradient(135deg, yellow 0%, red 100%);
+
+      z-index: 1;
+    }    
+
+    .card_back {
+      /* position: absolute; */
+      background: linear-gradient(135deg, rgb(98, 214, 182) 0%, rgb(101, 113, 228) 100%);
+      transform: scaleY(-1);
+      /* transition: 3s; */
+      /* z-index: -99; */
+    }
+    .card_wrap:hover {
+      transform: rotateX(180deg) rotateZ(150deg); 
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="box">BOX</div>
+    <div class="box">BOX</div>
+    <div class="box">BOX</div>
+    <div class="box_container">
+      <p>컨테이너 영역</p>
+      <div class="new_box"></div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="door_wrap">
+      <div class="door"></div>
+      <div class="door_inner">
+        <img class="donguri" src="./img/donguri.png" alt="donguri">
+      </div>
+    </div>
+    <div class="card_wrap">
+      <div class="card card_front">Front</div>
+      <div class="card card_back">Back</div>
+    </div>
+  </div>
+  <script>
+    const boxs = document.querySelectorAll(".box");
+    const box = document.querySelector(".new_box");
+    const door = document.querySelector(".door");
+    const img = document.querySelector(".donguri");
+    boxs.forEach((e)=>{
+      e.addEventListener("click",(e)=>{
+        e.currentTarget.classList.toggle("flipped");
+      })
+    })
+    box.addEventListener("click",(e)=>{
+      e.currentTarget.classList.toggle("active");
+    })
+    door.addEventListener("click",(e)=>{
+      e.currentTarget.classList.toggle("active");
+      img.classList.toggle("on");
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ex01.HTML태그 동적 생성</title>
+  <style>
+    ul {
+      list-style: decimal;
+    }
+    
+    .student{
+      color: #424242;
+      font-size: 25px;
+      line-height: 40px;
+    }
+  </style>
+</head>
+<body>
+  <h2>2학년 3반 출석부</h2>
+  <div class="inputWrap">
+    <input type="text" class="inputData" placeholder="이름을 입력해주세요.">
+    <button class="btn" id="insertBtn">앞에 삽입</button>
+    <button class="btn" id="appendBtn">뒤에 삽입</button>
+  </div>
+  <ul class="studentList">
+    <li class="student">권기범</li>
+    <li class="student">김규빈</li>
+    <li class="student">김미남</li>
+  </ul>
+  <button class="btn" id="delBtn">모두 삭제</button>
+  <button class="btn" id="reBtn">되돌리기</button>
+  <script>
+
+    // 1. ul태그의 마지막 자식으로 '김의겸' 추가하기
+    // => <li class="student">김의겸</li> 를 생성하여 ul태그의 마지막 자식으로 삽입
+    const stu_li = document.querySelector(".studentList");
+    const input = document.querySelector(".inputData");
+    const btns = document.querySelectorAll(".btn");
+    let li,lis =[];
+    
+    const make_li = ()=>{
+      li = document.createElement("li");
+      li.textContent = input.value;
+      li.classList.add("student");
+    }
+    const reset = ()=>{
+      input.value = "";
+      input.focus();
+    }
+
+    btns.forEach((e)=>{
+      e.addEventListener("click", (el)=>{
+        console.log()
+        switch(el.target.id){
+          case "insertBtn":
+            if(input.value == null || input.value == ""){alert("값을 입력해주세요");}
+            else {make_li();stu_li.insertBefore(li, stu_li.firstChild);reset(); }
+            break;
+          case "appendBtn":
+            if(input.value == null || input.value == "")alert("값을 입력해주세요");
+            else {make_li();stu_li.appendChild(li);reset();}
+            break;  
+          case "reBtn":
+            for(let i of lis)
+              stu_li.appendChild(i);
+            lis = []
+            break;
+          default:
+
+            // for(let i = stu_li.children.length; i > 0; i--)
+            //   lis.push(stu_li.removeChild(stu_li[0]));
+
+            for(let i of [...stu_li.children]) // another way to slove is  Array.from()
+              lis.push(stu_li.removeChild(i));
+
+            // while(stu_li.children.length!=0)
+            //   lis.push(stu_li.removeChild(stu_li[0]));
+
+
+        }
+      })
+    });
+    
+    // 부모의 마지막
+    // 1. appendChild();
+    // 2. append();
+
+    // 기준노드 앞에 추가
+    // 부모노드.insertBefore();
+
+    // 노드 삭제
+    // 부모노드.removeChild();
+
+
+     // 2. ul태그의 첫번째 자식으로 '강찬희' 추가하기
+    // => <li class="student">강찬희</li>
+    // --------------------------------------------------------
+        // DOM 노드 생성
+    // 1. 요소 노드 생성 :  document.creataeElement("태그명");
+    // 2. 텍스트 노드 생성 : document.createTextNode("문자열");
+
+    // DOM 트리 삽입 및 삭제
+    // 1. DOM 노드를 부모의 마지막 자식으로 삽입
+    //   (2) 부모노드.append(삽입할 노드 || 문자열); // 다중값 허용, 반환값 X
+    //   (1) 부모노드.appendChlid(삽입할 노드); // 다중값 허용X, 반환값 O
+    // 2. DOM 노드를 부모의 자식객체 중 기준 노드의 자식 앞에 삽입
+    //    부모노드.insertBefore(삽입할 노드, 기준점 노드);
+    // 3. 부모노드의 자식 객체를 삭제
+    //    부모노드.removeChild(자식노드);
+        
+    // removeChild()
+    // - 노드를 삭제하는 것이 아니라, 메모리에 해당 노드는 그대로 존재하며, 부모-자식 관계를 끊어 DOM 트리에서 해제
+    // - 최종적으로 관계를 끊은 해당 노드의 참조를 반환
+    // - 반환된 노드 참조를 변수에 담아 다른 DOM 위치에 붙일 수 있음
+
+  </script>
+</body>
+</html>

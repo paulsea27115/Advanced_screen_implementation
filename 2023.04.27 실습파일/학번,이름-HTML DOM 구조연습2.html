@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>HTML DOM 구조연습2</title>
+</head>
+
+<body>
+  <h2>구구단 출력</h2>
+  <form action="#" name="frm">
+    단 :
+    <select name="sel" id="selDan">
+      <option value="2">2단</option>
+      <option value="3">3단</option>
+      <option value="4">4단</option>
+      <option value="5">5단</option>
+      <option value="6">6단</option>
+      <option value="7">7단</option>
+      <option value="8">8단</option>
+      <option value="9">9단</option>
+    </select>
+    &nbsp;&nbsp;&nbsp;
+    <input type="button" value="삭제" id="del">
+  </form>
+  <br>
+  <table id="myTable">
+    <tbody id="myTbody"></tbody>
+  </table>
+  <script type="text/javascript">
+
+    const select = document.querySelector('select');
+    const options = select.children;
+    const btn = document.querySelector('input[type=button]');
+    const tableBody = document.querySelector('#myTable>tbody');
+    let tr;
+    let td;
+    let text;
+
+    console.log(select, options, btn, tableBody);
+    
+    const make = (Check)=>{
+      td = document.createElement('td');
+      text = document.createTextNode(`${Check.text}`);
+      td.appendChild(text);
+      tableBody.appendChild(td).setAttribute('class','table_Att');
+
+      for(let i = 1; i <= 9;i++){
+        tr = document.createElement('tr');
+        text = document.createTextNode(`${Check.value} X ${i} = ${Check.value*i}`);
+        tr.appendChild(text);
+        tableBody.appendChild(tr).setAttribute('class','table_Att');
+      }
+    };
+
+    btn.addEventListener("click",(e)=>{
+      let tableAtt = document.querySelectorAll("tbody>.table_Att");
+      console.log(tableAtt);
+      for(let item of [...tableAtt]){
+        tableBody.removeChild(item);
+      }
+    });
+
+    select.addEventListener("change", (e)=>{
+      let Check = e.target.options[e.target.selectedIndex];
+      console.log(Check)
+      make(Check)
+    });
+
+  </script>
+</body>
+</html>

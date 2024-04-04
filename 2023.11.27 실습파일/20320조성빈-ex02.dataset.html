@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ex02.dataset 속성</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      h2 {
+        text-align: center;
+        padding: 20px 0;
+        font-size: 3.5rem;
+      }
+
+      h3 {
+        padding: 10px 0;
+        font-size: 2rem;
+      }
+
+      .container {
+        display: flex;
+        width: 600px;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border: 2px solid #ccc;
+        margin: 30px auto;
+        padding-bottom: 10px;
+      }
+      ul {
+        list-style: decimal;
+        font-size: 1.5rem;
+        line-height: 3rem;
+        cursor: pointer;
+        padding: 20px 0;
+      }
+
+      p {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+
+      #result {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        padding: 50px;
+        opacity: 1;
+        transform: scale(1);
+        /* transform: translateY(30px); */
+      }
+
+      img {
+        width: 200px;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 data-test="This is test">This is dataset test</h2>
+    <hr />
+    <div class="container">
+      <h3>Programming language</h3>
+      <ul>
+        <li class="item">HTML</li>
+        <li class="item">CSS</li>
+        <li class="item">JavaScript</li>
+      </ul>
+    </div>
+
+    <p>Please click one programming language</p>
+    <p id="result"></p>
+
+    <script>
+      const items = document.querySelectorAll("li");
+      const res = document.querySelector("#result");
+
+      document.querySelectorAll(".item").forEach((el)=>{
+        el.dataset.img = `./img/${el.textContent.toLowerCase()}_icon.png`; // javascript로 data-set 넣기
+      })
+      
+      const img_inner = (language, url)=>{ // 언어, img url 값을 받아
+        let img = document.createElement("img");
+        let p = document.createElement("p");
+        // result 에 넣을 요소들
+
+        img.src = url
+        p.textContent = `선택한 언어: ${language}`
+        // result 에 넣을 요소들의 값을 설정
+        if (img.hasAttribute("src")) {
+          gsap.from(res, {
+            y: 30,
+            opacity: 0,
+            duration:0.5,
+            scale:0.5,
+            rotate:45,
+          })
+        }
+        res.replaceChildren(p, img); // res값을 p와 img로 replace함
+
+      }
+      
+      items.forEach((el)=>{
+        el.addEventListener("click",(e)=>{
+          let current = e.currentTarget; // 현재 이벤트가 발동된 요소 정보 
+          img_inner(current.textContent, current.dataset.img) // img 넣을 함수 호출
+        })
+      })
+
+    </script>
+  </body>
+</html>

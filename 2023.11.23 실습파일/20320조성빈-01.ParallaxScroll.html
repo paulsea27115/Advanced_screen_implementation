@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>01.ParallaxScroll</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1 {
+        font-weight: bolder;
+        font-size: 55px;
+        text-align: center;
+      }
+      h2 {
+        font-weight: bolder;
+        font-size: 40px;
+        margin-bottom: 10px;
+        padding: 10px;
+        /* margin-bottom: 10px; */
+      }
+      h3 {
+        font-size: 30px;
+      }
+      section {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+      }
+      section h1 {
+        transform: translateY(50px);
+        transition: 1s;
+        opacity: 0;
+      }
+      section h1.visible {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+      section:nth-child(1):after {
+        content: "";
+        height: 100px;
+      }
+      section:nth-child(2n-1) {
+        background-color: rgb(27, 31, 44);
+        color: aliceblue;
+      }
+      section:nth-child(2n) h2 {
+        border-bottom: 3px solid rgb(12, 11, 37);
+      }
+      section:nth-child(2n-1) h2 {
+        border-bottom: 3px solid rgb(141, 140, 184);
+      }
+      section:nth-child(3)  p {
+        color: black;
+      }
+      div.container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transform: translateY(100px);
+        transition: 2s;
+        opacity: 0;
+      }
+      div.container.visible {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+      div.cards {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      div.text-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 200px;
+        height: 250px;
+        padding: 20px;
+        background-color: rgb(112, 222, 218);
+        margin: 15px;
+        transition: 0.5s;
+        cursor: pointer;
+        /* max-height: 300px; */
+      }
+      div.text-card P {
+        text-align: center;
+      }
+      div.text-card:hover {
+        width: 225px;
+        height: 275px;
+        background-color: rgb(163, 247, 244);
+        transition: 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1>Interactive Scroll</h1>
+    </section>
+    <section>
+      <div class="container reveal">
+        <h2>Your Title</h2>
+        <div class="cards">
+          <div class="text-card">
+            <h3>Title</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="text-card">
+            <h3>Title</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="text-card">
+            <h3>Title</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container reveal">
+        <h2>Your Title</h2>
+        <div class="cards">
+          <div class="text-card">
+            <h3>Title</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="text-card">
+            <h3>Title</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="text-card">
+            <h3>Title</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container reveal">
+        <h2>Your Title</h2>
+        <div class="cards">
+          <div class="text-card">
+            <h3>Title</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="text-card">
+            <h3>Title</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="text-card">
+            <h3>Title</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      window.onload = ()=>{
+        window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
+      }
+      
+      const h1 = document.querySelector("h1");
+      const containers = document.querySelectorAll(".container");
+
+      const check = (entry)=>{
+        if(entry.isIntersecting)
+          entry.target.classList.add("visible")
+        else
+          entry.target.classList.remove("visible")
+      }
+
+      const io = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          check(entry)
+        })
+      }); // 관찰자 초기화
+      
+      io.observe(document.querySelector("section h1"))
+      
+      containers.forEach((n)=>{
+        io.observe(n); // 관찰자 등록
+      })
+    </script>
+  </body>
+</html>

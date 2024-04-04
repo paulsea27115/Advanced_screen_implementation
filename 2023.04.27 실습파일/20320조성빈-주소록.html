@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .changeBtn {
+            background-color: black;
+            color: white;
+            width: 150px;
+            height: 50px;
+            border: 0;
+            border-radius: 50px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            margin: 20px;
+        }
+        .dark {
+            color : white;
+            background-color: black;
+        }
+        .white {
+            color: black;
+            background-color: white;
+        }
+        .send {
+            width: 75px;
+            height: 30px;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 50px;
+        }
+
+        @keyframes choi{
+            
+        }
+        
+    </style>
+</head>
+
+<body class="">
+    <h2>주소록 예제</h2>
+    <div class="toogleWrap">
+        <input type="button" value="Dark Mode 🌙" id="dark" class="changeBtn">
+    </div>
+    이름: <input class="data" type="text" name="name"><br>
+    전화번호: <input class="data" type="text" name="tel"><br><br>
+    <input class="send" type=button value="저장">
+    <input class="send" type=button value="리셋">
+    </form>
+    <hr>
+    <h3>주소록 목록</h3>
+    <ul id="addrlist" style="height:2000px"></ul>
+    <script>
+        const body = document.querySelector('body');
+        const btns = Array.from(document.querySelectorAll("input[type=button]"));
+        const inputs = Array.from(document.querySelectorAll("input[type=text]"));
+        const ul_list = document.querySelectorAll("ul");
+        let newLi;
+        let text;
+        let li_list; 
+        console.log(ul_list,inputs)
+
+        // 먼저 textnode를 담을 element를 먼저 만들어 주고 그안에 textnode를 넣는다.
+        // 그다음 해당되는 addrlist에 넣어준다.
+
+        const save = ()=>{
+            if (inputs[0].value.length == 0 || inputs[1].value.length == 0){
+                alert("값을 입력해주세요")
+                return 0;
+            }
+            newLi = document.createElement("li");
+            text = document.createTextNode(`${inputs[0].value} , ${inputs[1].value}`)
+            newLi.appendChild(text);
+            ul_list[0].appendChild(newLi);
+            console.log(ul_list);
+        }
+
+        const reset = ()=>{
+            li_list = document.querySelectorAll('ul>li');
+            for(let item of li_list){
+                ul_list[0].removeChild(item);
+            }
+        }
+
+        const darkCheck = (el)=>{
+            body.classList.toggle('dark');
+            el.classList.toggle('white');
+            el.classList.contains('white')?el.value='Ligth Mode 🌞':el.value='Dark Mode 🌙';
+        }
+
+        btns.forEach((el)=>{
+            el.addEventListener("click",(e) => {
+                console.log(e.target.value);
+                e.target.value === "저장" ? save() :
+                e.target.getAttribute('id') === 'dark' ? darkCheck(e.target) : reset();
+            });
+        });
+
+    </script>
+</body>
+
+</html>

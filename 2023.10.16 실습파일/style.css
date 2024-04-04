@@ -1,0 +1,195 @@
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-family: sans-serif;
+  }
+  
+  body {
+    box-sizing: border-box;
+    margin: 0px;
+    font-family: Consolas, monospace;
+    background-color: #487eb0;
+  }
+  
+  body::before {
+    background-attachment: scroll;
+    content: '';
+    display: block;
+    width: 100vw;
+    height: 100%;
+    left: 0;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    z-index: 0;
+    background-color: #8EC5FC;
+    background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+  }
+  
+  .head_title {
+    position: sticky;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .head_title > .logo{
+    display: block;
+    width: 300px;
+    height: 200px;
+    background: url("./img/avengers_logo.png");
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 20px;
+  }
+  
+  .container {
+    position: relative;
+    display: flex;
+    width: 100vw;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+    margin-bottom: 50px;
+  }
+  
+  .card{
+    transition: 1s;
+    width: calc(90vw - 180px);
+    max-width: 300px;
+    height: 450px;
+    transform: translateY(90px);
+    opacity: 0;
+  }
+
+  /* delay */
+
+  .card:nth-child(1) {
+    transition-delay: 0s;
+  }
+
+  .card:nth-child(2) {
+    transition-delay: 0.5s;
+  }
+
+  .card:nth-child(3) {
+    transition-delay: 1s;
+  }
+
+
+  /* card */
+  
+  .card_inner{
+    transition: 1s;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+  }
+  
+  .card_face{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    overflow: hidden;
+    border-radius: 30px;
+    box-shadow: 0px 3px 18px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card_front{
+    display: flex;
+    flex-direction: column;
+    border: 10px solid #fff;
+    background-image: url('img/avengers_bg.jpg');
+    background-size: cover;
+    background-position: center;
+    /* z-index: 99; */
+  }
+
+  .start {
+    transition: 1s;
+    transform: translateY(0px);
+    opacity: 1;
+  }
+
+  .turn {
+    transition: 1s;
+    transform: perspective(800px) rotateY(-180deg);
+  }
+
+  /* back_images */
+
+  .back_img01{
+    background-image: url("img/IronMan.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+
+  .back_img02{
+    background-image: url("img/captinAmerica.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+
+  .back_img03{
+    background-image: url("img/spiderMan.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* card_back */
+
+  .card_back {
+    /* display: none; */
+    width: 320px;
+    height: 470px;
+    transition: 1s;
+    overflow: hidden;
+    transform: perspective(800px) rotateY(-180deg);
+    /* z-index: 1; */
+    display: block;
+    backface-visibility: hidden;
+  }
+
+  .card_back::before {
+    transition: 0.5s;
+    display: block;
+    position: relative;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 320px;
+    height: 470px;
+    background: rgba(235, 235, 235, 0.282);
+  }
+  
+  .back_contents {
+    transition: 0.5s;
+    transform: translateY(-60px);
+    box-sizing: border-box;
+    padding: 10px;
+    color: white !important;
+    background: rgba(0, 0, 0, 0.599) !important;
+  }
+
+  .card_title {
+    font-size: 26px;
+    padding-bottom: 11px;
+    font-weight: bold;
+  }
+
+  .card_back:hover::before {
+    transition: 0.5s;
+    opacity: 0;
+  }
+
+  .card_back:hover >  .back_contents{
+    transform: translateY(-150px);
+    background: rgba(0, 0, 0, 0.94) !important;
+  }

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ex01.HTML태그 동적 생성</title>
+  <style>
+    ul {
+      list-style: decimal;
+    }
+    
+    .student{
+      color: #424242;
+      font-size: 25px;
+      line-height: 40px;
+    }
+  </style>
+</head>
+<body>
+  <h2>2학년 3반 출석부</h2>
+  <div class="inputWrap">
+    <input type="text" class="inputData" placeholder="이름을 입력해주세요.">
+    <button class="btn" id="insertBtn">앞에 삽입</button>
+    <button class="btn" id="appendBtn">뒤에 삽입</button>
+  </div>
+  <ul class="studentList">
+    <li class="student">권기범</li>
+    <li class="student">김규빈</li>
+    <li class="student">김미남</li>
+  </ul>
+  <button class="btn">모두 삭제</button>
+  <script>
+
+    // 1. ul태그의 마지막 자식으로 '김의겸' 추가하기
+    // => <li class="student">김의겸</li> 를 생성하여 ul태그의 마지막 자식으로 삽입
+    const stu_li = document.querySelector(".studentList");
+    const input = document.querySelector(".inputData");
+    const btns = document.querySelectorAll(".btn");
+    let li;
+    
+    const make_li = ()=>{
+      li = document.createElement("li");
+      li.textContent = input.value;
+      li.classList.add("student");
+    }
+
+    btns.forEach((e)=>{
+      e.addEventListener("click", (el)=>{
+        switch(el.target.id){
+          case "insertBtn":
+            make_li()
+            stu_li.insertBefore(li, stu_li.firstChild);
+            break;
+          case "appendBtn":
+            make_li()
+            stu_li.appendChild(li);
+            break;
+          default:
+            let len = stu_li.children.length;
+            for(let i = 0; i < len; i++)
+              stu_li.removeChild(stu_li.children[0]);
+        }
+      })
+    });
+    
+    // 부모의 마지막
+    // 1. appendChild();
+    // 2. append();
+
+    // 기준노드 앞에 추가
+    // 부모노드.insertBefore();
+
+    // 노드 삭제
+    // 부모노드.removeChild();
+
+
+     // 2. ul태그의 첫번째 자식으로 '강찬희' 추가하기
+    // => <li class="student">강찬희</li>
+
+  </script>
+</body>
+</html>

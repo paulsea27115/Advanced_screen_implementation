@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>실습해보기6</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 30px 30px;
+    }
+
+    body{
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    ul{
+      list-style: none;
+    }
+
+    div.titleBox{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .title{
+      font-size: 28px;
+      font-weight: bold;
+      margin : 15px;
+    }
+
+    div.btnWrap > input[type="button"]{
+      cursor: pointer;
+      width: 200px;
+      height: 50px;
+      border: 0;
+      border-radius: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: rgb(255, 236, 23);
+      text-align: center;
+    }
+    div.btnWrap > input[type="button"]:last-child{
+      background-color: rgb(255, 53, 30);
+      color: white;
+    }
+
+    div.btnWrap > input[type="button"]:hover{
+      background-color: rgb(33, 240, 255);
+      color: white;
+    }
+
+    div.btnWrap > input[type="button"]:last-child:hover{
+      background-color: rgb(33, 255, 111);
+      color: black;
+    }
+
+    ul.balls{
+      display: flex;
+      margin : 20px;
+      border: 1px solid grey;
+      border-radius: 10px;
+    }
+
+    ul.balls > li{
+      text-align: center;
+      font-size: 50px;
+      border-radius: 10px;
+      padding: 20px;
+      margin : 10px;
+      box-shadow: 0px 0px 4px 0px grey;
+    }
+    
+    @media screen and (max-width: 768px) {
+      ul.balls {
+        animation-name: dragPage;
+        animation-duration: 0.5s;
+        width: 260px;
+        flex-wrap: wrap;
+      }
+      @keyframes dragPage {
+        0%{
+          width: auto;
+        }
+        100%{
+          width: 260px;
+        }
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>자식 노드 다루기</h1>
+  <div class="titleBox">
+    <p class="title">Balls</p>
+    <div class="btnWrap">
+      <input class="childrenBtn" type="button" value="children 버튼">
+      <input class="childNodesBtn" type="button" value="childNodes 버튼">
+      <input class="reset" type="button" value="RESET">
+    </div>
+  </div>
+  <div class="container">
+    <ul class="balls">
+      <li>⚽</li>
+      <li>🥎</li>
+      <li>🏀</li>
+      <li>🏐</li>
+      <li>🎱</li>
+      <li>🎳</li>
+    </ul>
+  </div>
+  <script>
+    const btns = document.querySelectorAll("input[type=button]");
+    const container = document.querySelector("div.container");
+    const li_list1 = container.children[0].children;
+    const childNode = container.children[0].childNodes;
+    
+    console.log(li_list1,childNode)
+
+    btns.forEach((el, idx)=>{
+      el.addEventListener("click",()=>{
+        switch(idx){
+          case 0: for(let item of li_list1){item.style.backgroundColor="aqua";} break;
+          case 1: for(let item of childNode){if(item.nodeName == "LI") item.style.backgroundColor="orange";} break;
+          case 2: for(let item of li_list1){item.style.backgroundColor="";} break;
+        }
+      })
+    })
+  </script>
+</body>
+
+</html>

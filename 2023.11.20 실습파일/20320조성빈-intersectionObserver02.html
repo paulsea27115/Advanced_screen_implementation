@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intersection Observer02</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    section {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      text-align: center;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+    }
+    img {
+      margin: 50px;
+      width: 350px;
+      height: 250px;
+      transition: 1s;
+    }
+    h1 {
+      font-size: 3rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.5rem;
+      color: #3ee4e4;
+    }
+
+    /* 메인 요소들 */
+
+    #color {
+      color: rgb(0, 200, 255);
+    }
+
+
+    .section-01 {
+      background-color: rgb(39, 57, 101);
+    }
+    .section-01 div.container {
+      transition: 1s;
+      color: white;
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    .section-01 div.container.visible {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+    div p {
+      color: rgb(185, 185, 185);
+    }
+
+    
+
+    .section-02 {
+      background-color: rgb(69, 46, 100);
+    }
+    .section-02 div.container {
+      transition: 1s;
+      color: white;
+      transform: translateX(50px);
+      opacity: 0;
+    }
+    .section-02 div.container.visible{
+      opacity: 1;
+      transform: translateX(0px);
+    }
+    
+    .section-03 {
+      background-color: rgb(61, 133, 72);
+    }
+    .section-03 div.container {
+      transition: 1s;
+      color: white;
+      opacity: 0;
+      transform: scaleX(.7);
+    }
+    .section-03 div.container.visible {
+      transform: scaleX(1);
+      color: white;
+      opacity: 1;
+    }
+    
+    .section-04 {
+      background-color: rgb(175, 156, 80);
+    }
+    .section-04 div.container {
+      transition: 1s;
+      opacity: 0;
+      color: white;
+      transform: translateX(-100px);
+    }
+    .section-04 div.container.visible {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+
+
+    .section-05 {
+      background-color: rgb(61, 133, 130);
+    }
+    .section-05 div.container {
+      transition: 1s;
+      opacity: 0;
+      color: white;
+      transform: rotate(-90deg);
+    }
+    .section-05 div.container.visible {
+      opacity: 1;
+      transform: rotate(0)
+    }
+
+  </style>
+</head>
+
+<body>
+  <section class="section-01">
+    <div class="container">
+      <h1 class="animate">Hi, I'm <span id="color">Seongbin</span></h1>
+      <p class="animate">Animation on Scroll using HTML and Javascript</p>
+    </div>
+ 
+  </section>
+
+  <section class="section-02">
+    <div class="container">
+      <h1 class="animate">This is <span id="color">Second</span> page</h1>
+    <p class="animate">Animation on Scroll using HTML and Javascript</p>
+    </div>
+    
+  </section>
+
+  <section class="section-03">
+    <div class="container">
+       <h1 class="animate">This is <span id="color">Third</span> page</h1>
+    <p class="animate">Animation on Scroll using HTML and Javascript</p>
+    </div>
+   
+  </section>
+
+  <section class="section-04">
+    <div class="content_box">
+      <h1>Photo effect</h1>
+      <p>Animation on Scroll using HTML and Javascript</p>
+    </div>
+    <div class="container">
+
+      <img src="./img/img01.jpg" alt="img01" class="animate">
+      <img src="./img/img02.jpg" alt="img02" class="animate">
+      <img src="./img/img03.jpg" alt="img03" class="animate">
+
+    </div>
+  </section>
+
+  <section class="section-05">
+    <div class="container">
+      <h1 class="animate">This is the <span id="color">last</span> page</h1>
+      <p class="animate">Animation on Scroll using HTML and Javascript</p>
+    </div>
+  </section>
+  <script>
+    window.onload = ()=>{
+      window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
+    }
+    const container = document.querySelectorAll(".container")
+
+    const check = (entry)=>{
+      if(entry.isIntersecting)
+        entry.target.classList.add("visible")
+      else
+        entry.target.classList.remove("visible")
+    }
+
+    const io = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        check(entry)
+      })
+    }); // 관찰자 초기화
+    
+    container.forEach((v)=>{
+      io.observe(v); // 관찰자 등록
+    })
+
+  </script>
+
+</body>
+
+</html>

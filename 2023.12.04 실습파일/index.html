@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nav</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ul {
+            list-style: none;
+            display: flex;
+        }
+
+        body {
+            width: 100vw;
+            height: auto;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        section {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header {
+            width: 100vw;
+            height: 75px;
+        }
+
+        section:nth-child(odd) {
+            background-color: aqua;
+        }
+        section:nth-child(even) {
+            background-color: aquamarine;
+        }
+
+        .home {
+            background-image: url('./img/heroImage.jpg');
+            background-position: center;
+            background-size: cover;
+        }
+
+        .navbar {
+            /* transition: 0.5s; */
+            position: fixed;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(80, 94, 106,0.25);
+            backdrop-filter: blur(15px);
+        }
+        .navbar > div {
+            transition: 0.5s;
+            padding: 0 75px;
+        }
+        .logo span {
+            transition: 0.5s;
+            color: white !important;
+            font-weight: bolder;
+            font-size: 35px;
+        }
+
+        .li-list {
+            transition: 0.5s;
+            flex-direction: row;
+            gap: 25px;
+        }
+
+        .item {
+            color: white !important;
+            font-weight: bolder;
+            font-size: 20px;
+            cursor: pointer;
+            -webkit-user-select:none;
+            -moz-user-select:none;
+            -ms-user-select:none;
+            user-select:none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            width: 100vw;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        main .title{
+            color: rgb(145, 99, 225);
+            font-weight: bolder;
+            font-size: 60px;
+            text-shadow: 4px 4px 0px #ffffff;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .menu_btn {
+            display: none;
+            cursor: pointer;
+        }
+
+        .line {
+            background: white !important;
+            width: 35px;
+            height: 2px;
+            border-radius: 100px;
+            margin: 10px;
+        }
+
+        .nav.active {
+            height: auto;
+        }
+
+        .item:hover {
+            transition: 0.5s;
+            color: black !important;
+        }
+        
+        .logo > span {
+            cursor: pointer;
+        }
+        
+
+        @media screen and (max-width:786px){
+            header {
+                height: auto;
+            }
+            .navbar {
+                flex-direction: column;
+            }
+            .navbar > div {
+                padding: 0 0px;
+            }
+            .navbar:nth-child(1) {
+                padding: 0 50px;
+            }
+            .menu_btn {
+                /* transition: 1s; */
+                display: block;
+            }
+            .logo {
+                display: flex;
+                width: 100%;
+                height: 75px;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .nav {
+                height: 0px;
+                position: absolute;
+                top: 75px;
+                overflow: hidden;
+                transition: all 0.5s;
+            }
+            #topLine {
+                transition: 0.5s;
+            }
+            #bottomLine {
+                transition: 0.5s;
+            }
+            #middleLine {
+                transition: 0.5s;
+            }
+            .menu_btn.active #topLine {
+                transition: 0.5s;
+                transform: translateY(12px) rotate(45deg);
+            }
+            .menu_btn.active #bottomLine {
+                transition: 0.5s;
+                transform: translateY(-12px) rotate(-45deg);
+            }
+            .menu_btn.active #middleLine {
+                transition: 0.5s;
+                width: 0px;
+                transform: translateX(18px);
+            }
+            .li-list{
+                display: flex;
+                flex-direction: column;
+                background-color: rgba(182, 182, 182, 0.4);
+                overflow: hidden;
+                gap: 5px;
+            }
+            .item {
+                width: 100vw;
+                padding: 15px;
+                text-align: center;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+            .item:hover {
+                transition: 0.5s;
+                background-color: rgba(168, 168, 168, 0.4);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <span>LOGO</span>
+            <div class="menu_btn">
+                <div class="line" id="topLine"></div>
+                <div class="line" id="middleLine"></div>
+                <div class="line" id="bottomLine"></div>
+            </div>
+        </div>
+        <div class="nav">
+            <ul class="li-list">
+                <li class="item active">Home</li>
+                <li class="item">About</li>
+                <li class="item">Skills</li>
+                <li class="item">Portfolio</li>
+                <li class="item">Contact</li>
+            </ul>
+        </div>
+    </header>
+    <main>
+        <section class="title home">
+            Responsive navbar
+        </section>
+        <section class="title About">
+            About page
+        </section>
+        <section class="title Skills">
+            Skills page
+        </section>
+        <section class="title Portfolio">
+            Portfolio page
+        </section>
+        <section class="title Contact">
+            Contact page
+        </section>
+
+    </main>
+    <script>
+        const menu_btn = document.querySelector('.menu_btn');
+        const header = document.querySelector('header');
+        const nav = document.querySelector('.nav');
+        const main = document.querySelector('main');
+        const sections = Array.from(main.children);
+        const ul = nav.children;    
+        const li_one = Array.from(ul[0].children);
+        
+        const li_len = (li_one[0].offsetHeight+5) * li_one.length
+
+        const section_len = Array()
+
+        console.log(sections, li_one)
+        
+        menu_btn.addEventListener('click', (e)=>{
+            
+            menu_btn.classList.toggle('active');
+            nav.classList.toggle('active');
+
+            if(nav.classList.contains('active'))
+                nav.style.height = li_len + 'px';
+            else
+                nav.removeAttribute("style");
+        })
+
+        const reset = ()=>{
+            for(let li of li_one)
+                li.classList.remove("active");
+        }
+
+        const clickToMove = (current)=>{
+            reset()
+            current.classList.add("active")
+            window.scrollTo({top:sections[current.dataset.number - 1].offsetTop - header.offsetHeight,behavior:"smooth"})
+        }
+
+        const scrollToMove = (e)=>{
+            for(let i = 0; i < sections.length; i++) {
+                if(window.scrollY <= section_len[i]){
+                    reset()
+                    li_one[i].classList.add('active')
+                    console.log(section_len[i])
+                    break
+                }
+            }
+        }
+
+        li_one.forEach((e,idx)=>{
+            e.dataset.number = idx + 1;
+            sections[idx].dataset.number = idx + 1;
+            
+            section_len.push(sections[idx].offsetTop + sections[idx].offsetHeight - 10 - header.offsetHeight)
+            
+            e.addEventListener("click", (el)=>{  
+                current = el.currentTarget
+                
+                clickToMove(current)
+            });
+
+        })
+
+        window.addEventListener('scroll', scrollToMove,false);
+    </script>
+</body>
+</html>
